@@ -131,7 +131,7 @@ array(byte) heroSpr2d
 // Sprite 1 Frame Animation
 array(pointer) heroFramesAni1 = [
     heroSpr1a, heroSpr1b, heroSpr1c, heroSpr1d, heroSpr1e
-]`
+]
 // Sprite 2 Frame Animation
 array(pointer) heroFramesAni2 = [
     heroSpr2a, heroSpr2b, heroSpr2c, heroSpr2d, heroSpr2e
