@@ -127,14 +127,16 @@ array(byte) heroSpr2d
 
 Next, an array with pointers to frames will be added, separately for the 1st part of the sprite and separately for the 2nd:
 
-`// Sprite 1 Frame Animation`
-`array(pointer) heroFramesAni1 = [`
-`    heroSpr1a, heroSpr1b, heroSpr1c, heroSpr1d, heroSpr1e`
-`]`
-`// Sprite 2 Frame Animation`
-`array(pointer) heroFramesAni2 = [`
-`    heroSpr2a, heroSpr2b, heroSpr2c, heroSpr2d, heroSpr2e`
-`]`
+```c
+// Sprite 1 Frame Animation
+array(pointer) heroFramesAni1 = [
+    heroSpr1a, heroSpr1b, heroSpr1c, heroSpr1d, heroSpr1e
+]`
+// Sprite 2 Frame Animation
+array(pointer) heroFramesAni2 = [
+    heroSpr2a, heroSpr2b, heroSpr2c, heroSpr2d, heroSpr2e
+]
+```
 
 And finally, one more array for the duration of animation frames:
 
