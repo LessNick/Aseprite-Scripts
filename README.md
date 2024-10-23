@@ -2,9 +2,9 @@
 
 A set of scripts "!Atari Tools" that make working with the Aseprite graphic editor easier. At the moment, the project only includes one script "Sprites to Millfork", but other utilities are planned for the future.
 
-#### Sprites to Millfork
+## Sprites to Millfork
 
-##### Introduction
+### Introduction
 
 As the name suggests, this script allows you to get graphic data (sprites) from Aseprite in mfk text format for further use when building your projects using Millfork.
 
@@ -20,7 +20,7 @@ It is also worth noting that the sprite in Atari has several options for aspect 
 
 <img title="" src="misc/warning2.png" alt="" data-align="center">
 
-##### Aseprite improvement
+### Aseprite improvement
 
 Aseprite initially supports only 2:1 aspect ratio, but you can add the other two (4:1 and 8:1) yourself.
 
@@ -30,22 +30,20 @@ To do this, open the directory where your copy of Aseprite is installed. For exa
 
 Next, you need to find two files **new_sprite.xml** and **sprite_properties.xml** and in the pixel_ratio section add new entries, for example like this:
 
-`<combobox id="pixel_ratio" cell_align="horizontal">
-          <listitem text="@.square_pixels" value="1:1" />
-          <listitem text="@.double_wide" value="2:1" />
-          <listitem text="Atari 4:1" value="4:1" />
-          <listitem text="Atari 8:1" value="8:1" />
-`
+`<combobox id="pixel_ratio" cell_align="horizontal">`
+`          <listitem text="@.square_pixels" value="1:1" />`
+`          <listitem text="@.double_wide" value="2:1" />`
+`          <listitem text="Atari 4:1" value="4:1" />`
+`          <listitem text="Atari 8:1" value="8:1" />`
 
 the same in the second file:
 
-`<combobox id="pixel_ratio" cell_align="horizontal">
-        <listitem text="@.square_pixels" value="1:1" />
-        <listitem text="@.double_wide" value="2:1" />
-        <listitem text="@.double_high" value="1:2" />
-        <listitem text="Atari 4:1" value="4:1" />
-        <listitem text="Atari 8:1" value="8:1" />
-`
+`<combobox id="pixel_ratio" cell_align="horizontal">`
+`        <listitem text="@.square_pixels" value="1:1" />`
+`        <listitem text="@.double_wide" value="2:1" />`
+`        <listitem text="@.double_high" value="1:2" />`
+`        <listitem text="Atari 4:1" value="4:1" />`
+`        <listitem text="Atari 8:1" value="8:1" />`
 
 After restarting the editor, we will have new menu items:
 
@@ -57,7 +55,7 @@ In addition to single sprites, the script allows you to unload a whole group (an
 
 Since the script was developed to prepare data for my project "AirWolf(Prototype)", the frame delays were selected in such a way that the animation playback would be less similar both in Aseprite and on a real Atari.
 
-##### Installation
+### Installation
 
 To add a script to Aseprite, you need to open the settings directory. Under Windows, this will look like this:
 
@@ -69,7 +67,7 @@ After which, the script lists should show a picture like this:
 
 <img title="" src="misc/menu3.png" alt="" data-align="center">
 
-##### Settings
+### Settings
 
 After run the script, an additional window with settings will open:
 
@@ -77,11 +75,11 @@ After run the script, an additional window with settings will open:
 
 ***Variable prefix*** - this is a prefix for the variable (array) name that will be used when creating data. Usually it is taken from the name of the Aseprite working file, but you can set an arbitrary value. For example, when using the name "hero" the following names will be used:
 
-`byte heroSize
-array(byte) heroSpr1a
-array(byte) heroSpr2a
-array(pointer) heroFramesAni2
-array(byte) heroFramesDuration`
+`byte heroSize`
+`array(byte) heroSpr1a`
+`array(byte) heroSpr2a`
+`array(pointer) heroFramesAni2`
+`array(byte) heroFramesDuration`
 
 ***Animation Frames List*** - if this checkbox is active, then all animation frames will be added to the final file, otherwise there will be only sprite data.
 
@@ -91,7 +89,7 @@ array(byte) heroFramesDuration`
 
 ***Export sprites to Milfork file*** - the actual file name and its location on the disk. By default, this is "*spritesData.mfk*", but you can specify any file.
 
-##### Structure
+### Structure
 
 As was said earlier, the script was written for my own project and after saving the file "*spritesData.mfk*", the structure will look like this:
 
@@ -99,10 +97,10 @@ As was said earlier, the script was written for my own project and after saving 
 
 This is where the aspect ratio for atari sprites is stored: 0 - normal (ratio 2:1), 1 - double (ratio 4:1) and 3 - quadruple (ratio 8:1)
 
-`// Sprite 1 16x16
-array(byte) heroSpr1a = [0x00, … , 0x00]
-// Sprite 2 16x16
-array(byte) heroSpr2a= [0x00, … , 0x00]`
+`// Sprite 1 16x16`
+`array(byte) heroSpr1a = [0x00, … , 0x00]`
+`// Sprite 2 16x16`
+`array(byte) heroSpr2a= [0x00, … , 0x00]`
 
 Since the width of 1 sprite in Atari is rigidly set and equals 8, then the sprite data is 1 byte per line. If the sprite width is greater than 8, then the script assumes that you want to use 2 sprites at once and therefore immediately prepares data for the second. For example, like this chopper:
 
@@ -110,31 +108,31 @@ Since the width of 1 sprite in Atari is rigidly set and equals 8, then the sprit
 
 Depending on the number of animation frames, other data will be created, such as:
 
-`array(byte) heroSpr1b
-array(byte) heroSpr2b
-array(byte) heroSpr1c
-array(byte) heroSpr2c
-array(byte) heroSpr1d
-array(byte) heroSpr2d`
+`array(byte) heroSpr1b`
+`array(byte) heroSpr2b`
+`array(byte) heroSpr1c`
+`array(byte) heroSpr2c`
+`array(byte) heroSpr1d`
+`array(byte) heroSpr2d`
 
 Next, an array with pointers to frames will be added, separately for the 1st part of the sprite and separately for the 2nd:
 
-`// Sprite 1 Frame Animation
-array(pointer) heroFramesAni1 = [
-    heroSpr1a, heroSpr1b, heroSpr1c, heroSpr1d, heroSpr1e
-]
-// Sprite 2 Frame Animation 
-array(pointer) heroFramesAni2 = [
-    heroSpr2a, heroSpr2b, heroSpr2c, heroSpr2d, heroSpr2e
-]`
+`// Sprite 1 Frame Animation`
+`array(pointer) heroFramesAni1 = [`
+`    heroSpr1a, heroSpr1b, heroSpr1c, heroSpr1d, heroSpr1e`
+`]`
+`// Sprite 2 Frame Animation`
+`array(pointer) heroFramesAni2 = [`
+`    heroSpr2a, heroSpr2b, heroSpr2c, heroSpr2d, heroSpr2e`
+`]`
 
 And finally, one more array for the duration of animation frames:
 
-`// Sprite Frame Duration
-array(byte) heroFramesDuration = [
-        1, 1, 1, 1, 1
-]`
+`// Sprite Frame Duration`
+`array(byte) heroFramesDuration = [`
+`        1, 1, 1, 1, 1`
+`]`
 
-#### License
+### License
 
 Source Copyright © 2024 Breeze\Fishbone and contributors. Distributed under the BSD License. See the file LICENCE.
