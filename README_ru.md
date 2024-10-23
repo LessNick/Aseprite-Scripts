@@ -30,22 +30,24 @@
 
 Далее нужно найти два файла **new_sprite.xml** и **sprite_properties.xml** и в разделе pixel_ratio добавляем новые записи, например так:
 
-`<combobox id="pixel_ratio" cell_align="horizontal">
+```xml
+<combobox id="pixel_ratio" cell_align="horizontal">
           <listitem text="@.square_pixels" value="1:1" />
           <listitem text="@.double_wide" value="2:1" />
           <listitem text="Atari 4:1" value="4:1" />
           <listitem text="Atari 8:1" value="8:1" />
-`
+```
 
 тоже самое во втором файле:
 
-`<combobox id="pixel_ratio" cell_align="horizontal">
+```xml
+<combobox id="pixel_ratio" cell_align="horizontal">
         <listitem text="@.square_pixels" value="1:1" />
         <listitem text="@.double_wide" value="2:1" />
         <listitem text="@.double_high" value="1:2" />
         <listitem text="Atari 4:1" value="4:1" />
         <listitem text="Atari 8:1" value="8:1" />
-`
+```
 
 После перезапуска редактора у нас появятся новые пункты меню:
 
@@ -77,11 +79,13 @@
 
 ***Variable prefix*** - это префикс для названия переменных (массивов) которое будет использовано при создании данных. Обычно оно берётся из имени рабочего файла Aseprite, но вы можете задать произвольное значение. Например, при использовании названия «hero» будут такие имена:
 
-`byte heroSize`
-`array(byte) heroSpr1a`
-`array(byte) heroSpr2a`
-`array(pointer) heroFramesAni2`
-`array(byte) heroFramesDuration`
+```c
+byte heroSize
+array(byte) heroSpr1a
+array(byte) heroSpr2a
+array(pointer) heroFramesAni2
+array(byte) heroFramesDuration
+```
 
 ***Animation Frames List*** - если активен этот чекбокс, то в конечный файл будут добавлены все кадры анимации, в противном случает будут лишь данные спрайта.
 
@@ -99,10 +103,12 @@
 
 Здесь хранится соотношение сторон для атари спрайтов: 0 - normal (соотношение 2:1), 1 - double (соотношение 4:1) и 3 - quadruple (соотношение 8:1)
 
-`// Sprite 1 16x16`
-`array(byte) heroSpr1a = [0x00, … , 0x00]`
-`// Sprite 2 16x16`
-`array(byte) heroSpr2a= [0x00, … , 0x00]`
+```c
+// Sprite 1 16x16
+array(byte) heroSpr1a = [0x00, … , 0x00]
+// Sprite 2 16x16
+array(byte) heroSpr2a= [0x00, … , 0x00]
+```
 
 Поскольку ширина 1 спрайта в Atari, жостко задана и равняется 8, то данные спрайта по 1 байту на линию. Если же ширина спрайта больше 8, то скрипт подразумевает, что вы ходите задествовать сразу 2 спрайта и поэтому сразу подготавливает данные для второго. Например как у этого вертолёта:
 
@@ -110,30 +116,36 @@
 
 В зависимости от количества кадров анимации будут созданы и другие даные, например:
 
-`array(byte) heroSpr1b`
-`array(byte) heroSpr2b`
-`array(byte) heroSpr1c`
-`array(byte) heroSpr2c`
-`array(byte) heroSpr1d`
-`array(byte) heroSpr2d`
+```c
+array(byte) heroSpr1b
+array(byte) heroSpr2b
+array(byte) heroSpr1c
+array(byte) heroSpr2c
+array(byte) heroSpr1d
+array(byte) heroSpr2d
+```
 
 Далее будет добавлен массив с указателями на кадры, отдельно для 1й части спрайта и отдельно для 2й:
 
-`// Sprite 1 Frame Animation`
-`array(pointer) heroFramesAni1 = [`
-`    heroSpr1a, heroSpr1b, heroSpr1c, heroSpr1d, heroSpr1e`
-`]`
-`// Sprite 2 Frame Animation`
-`array(pointer) heroFramesAni2 = [`
-`    heroSpr2a, heroSpr2b, heroSpr2c, heroSpr2d, heroSpr2e`
-`]`
+```c
+// Sprite 1 Frame Animation
+array(pointer) heroFramesAni1 = [
+    heroSpr1a, heroSpr1b, heroSpr1c, heroSpr1d, heroSpr1e
+]`
+// Sprite 2 Frame Animation
+array(pointer) heroFramesAni2 = [
+    heroSpr2a, heroSpr2b, heroSpr2c, heroSpr2d, heroSpr2e
+]
+```
 
 И в заключении ещё один массив для продолжительности кадров анимации:
 
-`// Sprite Frame Duration`
-`array(byte) heroFramesDuration = [`
-`        1, 1, 1, 1, 1`
-`]`
+```c
+// Sprite Frame Duration
+array(byte) heroFramesDuration = [
+        1, 1, 1, 1, 1
+]
+```
 
 ### License
 

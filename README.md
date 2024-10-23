@@ -30,20 +30,24 @@ To do this, open the directory where your copy of Aseprite is installed. For exa
 
 Next, you need to find two files **new_sprite.xml** and **sprite_properties.xml** and in the pixel_ratio section add new entries, for example like this:
 
-`<combobox id="pixel_ratio" cell_align="horizontal">`
-`          <listitem text="@.square_pixels" value="1:1" />`
-`          <listitem text="@.double_wide" value="2:1" />`
-`          <listitem text="Atari 4:1" value="4:1" />`
-`          <listitem text="Atari 8:1" value="8:1" />`
+```xml
+<combobox id="pixel_ratio" cell_align="horizontal">
+          <listitem text="@.square_pixels" value="1:1" />
+          <listitem text="@.double_wide" value="2:1" />
+          <listitem text="Atari 4:1" value="4:1" />
+          <listitem text="Atari 8:1" value="8:1" />
+```
 
 the same in the second file:
 
-`<combobox id="pixel_ratio" cell_align="horizontal">`
-`        <listitem text="@.square_pixels" value="1:1" />`
-`        <listitem text="@.double_wide" value="2:1" />`
-`        <listitem text="@.double_high" value="1:2" />`
-`        <listitem text="Atari 4:1" value="4:1" />`
-`        <listitem text="Atari 8:1" value="8:1" />`
+```xml
+<combobox id="pixel_ratio" cell_align="horizontal">
+        <listitem text="@.square_pixels" value="1:1" />
+        <listitem text="@.double_wide" value="2:1" />
+        <listitem text="@.double_high" value="1:2" />
+        <listitem text="Atari 4:1" value="4:1" />
+        <listitem text="Atari 8:1" value="8:1" />
+```
 
 After restarting the editor, we will have new menu items:
 
@@ -75,11 +79,13 @@ After run the script, an additional window with settings will open:
 
 ***Variable prefix*** - this is a prefix for the variable (array) name that will be used when creating data. Usually it is taken from the name of the Aseprite working file, but you can set an arbitrary value. For example, when using the name "hero" the following names will be used:
 
-`byte heroSize`
-`array(byte) heroSpr1a`
-`array(byte) heroSpr2a`
-`array(pointer) heroFramesAni2`
-`array(byte) heroFramesDuration`
+```c
+byte heroSize
+array(byte) heroSpr1a
+array(byte) heroSpr2a
+array(pointer) heroFramesAni2
+array(byte) heroFramesDuration
+```
 
 ***Animation Frames List*** - if this checkbox is active, then all animation frames will be added to the final file, otherwise there will be only sprite data.
 
@@ -97,10 +103,12 @@ As was said earlier, the script was written for my own project and after saving 
 
 This is where the aspect ratio for atari sprites is stored: 0 - normal (ratio 2:1), 1 - double (ratio 4:1) and 3 - quadruple (ratio 8:1)
 
-`// Sprite 1 16x16`
-`array(byte) heroSpr1a = [0x00, … , 0x00]`
-`// Sprite 2 16x16`
-`array(byte) heroSpr2a= [0x00, … , 0x00]`
+```c
+// Sprite 1 16x16
+array(byte) heroSpr1a = [0x00, … , 0x00]
+// Sprite 2 16x16
+array(byte) heroSpr2a= [0x00, … , 0x00]
+```
 
 Since the width of 1 sprite in Atari is rigidly set and equals 8, then the sprite data is 1 byte per line. If the sprite width is greater than 8, then the script assumes that you want to use 2 sprites at once and therefore immediately prepares data for the second. For example, like this chopper:
 
@@ -108,12 +116,14 @@ Since the width of 1 sprite in Atari is rigidly set and equals 8, then the sprit
 
 Depending on the number of animation frames, other data will be created, such as:
 
-`array(byte) heroSpr1b`
-`array(byte) heroSpr2b`
-`array(byte) heroSpr1c`
-`array(byte) heroSpr2c`
-`array(byte) heroSpr1d`
-`array(byte) heroSpr2d`
+```c
+array(byte) heroSpr1b
+array(byte) heroSpr2b
+array(byte) heroSpr1c
+array(byte) heroSpr2c
+array(byte) heroSpr1d
+array(byte) heroSpr2d
+```
 
 Next, an array with pointers to frames will be added, separately for the 1st part of the sprite and separately for the 2nd:
 
@@ -128,10 +138,12 @@ Next, an array with pointers to frames will be added, separately for the 1st par
 
 And finally, one more array for the duration of animation frames:
 
-`// Sprite Frame Duration`
-`array(byte) heroFramesDuration = [`
-`        1, 1, 1, 1, 1`
-`]`
+```c
+// Sprite Frame Duration
+array(byte) heroFramesDuration = [
+        1, 1, 1, 1, 1
+]
+```
 
 ### License
 
