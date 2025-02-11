@@ -58,6 +58,7 @@ function makeText(sPrefix, enableAni, enableEmpty)
 	local aniStr2 = ""	-- Sprite 2 animation list
 	local aniStr3 = ""	-- Sprite 3 animation list
 	local aniStr4 = ""	-- Sprite 4 animation list
+	local aniStr5 = ""	-- Sprite 5 animation list
 	local timeStr = ""	-- Sprite timeline list
 	
 	exp = exp .. "\r\n// Sprite size (width) of player: 0 = normal, 1 = double, 3 = quadruple"
@@ -81,6 +82,7 @@ function makeText(sPrefix, enableAni, enableEmpty)
 		local aByte2 = {}	-- Atari sprite 2 (array bytes)
 		local aByte3 = {}	-- Atari sprite 3 (array bytes)
 		local aByte4 = {}	-- Atari sprite 4 (array bytes)
+		local aByte5 = {}	-- Atari sprite 5 (array bytes)
 		local workByte = 0
 		local bitPos = 7
 		for it in image:pixels() do
@@ -105,8 +107,11 @@ function makeText(sPrefix, enableAni, enableEmpty)
 				elseif (it.x >= 16 and it.x <= 23) then
 					aByte3[#aByte3 + 1] = workByte
 				
-				elseif (it.x >= 24 and it.x <= 27) then
+				elseif (it.x >= 24 and it.x <= 31) then
 					aByte4[#aByte4 + 1] = workByte
+
+				elseif (it.x >= 32 and it.x <= 39) then
+					aByte5[#aByte5 + 1] = workByte
 				end
 				workByte = 0
 			end
@@ -146,6 +151,14 @@ function makeText(sPrefix, enableAni, enableEmpty)
 			end
 			aniStr4 = aniStr4 .. n
 		end
+		if (#aByte5 > 0) then
+			r, n = getSprArrayText(sPrefix, fNum, 5, aByte5, sWidth, sHeight)
+			exp = exp .. "\r\n" .. r
+			if aniStr5 ~= "" then
+				aniStr5 = aniStr5 .. ", "
+			end
+			aniStr5 = aniStr5 .. n
+		end
 
 		exp = exp .. "\r\n"
 	end
@@ -161,6 +174,9 @@ function makeText(sPrefix, enableAni, enableEmpty)
 		end
 		if aniStr4 ~= "" then
 			exp = exp .. "\r\n// Sprite 4 Frame Animation \r\narray(pointer) " .. sPrefix .. "FramesAni4 = [\r\n\t" .. aniStr4 .. "\r\n]\r\n"
+		end
+		if aniStr5 ~= "" then
+			exp = exp .. "\r\n// Sprite 5 Frame Animation \r\narray(pointer) " .. sPrefix .. "FramesAni5 = [\r\n\t" .. aniStr5 .. "\r\n]\r\n"
 		end
 		
 		exp = exp .. "\r\n// Sprite Frame Duration \r\narray(byte) " .. sPrefix .. "FramesDuration = [\r\n\t" .. timeStr .. "\r\n]\r\n"
@@ -227,7 +243,7 @@ if data.ok then
 			writeMode = "a+b"
 		end
 		local out = io.open(app.fs.normalizePath(data.filename), writeMode)
-		local header = "////////////////////////////////////////////\r\n"
+		local header = "\r\n////////////////////////////////////////////\r\n"
 		out:write(header .. "// Spites " .. title .. "\r\n" .. header)
  		out:write(exp)
  		out:close()
